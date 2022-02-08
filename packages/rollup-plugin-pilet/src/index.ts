@@ -11,19 +11,30 @@ export interface PiletPluginOptions {
 }
 
 export default function pilet({ id, debug, piletName, importmap, requireRef }: PiletPluginOptions): Plugin {
+  const cssFiles: Array<string> = [];
+
   return {
     name: 'pilet',
+    resolveId(id) {
+      if (id.endsWith('.css') || id.endsWith('.scss') || id.endsWith('.sass')) {
+        cssFiles.push(id);
+      }
+
+      return null;
+    },
     renderChunk(content, { map, isEntry, name }) {
-      const modifiedContent = modifyImports(content, importmap);
+      let code = modifyImports(content, importmap);
 
       if (isEntry && name === id) {
-        const body = insertStylesheet(modifiedContent, piletName, debug);
-        const code = prependBanner(body, requireRef, importmap);
-        return { code, map };
-      } else {
-        const code = modifiedContent;
+        if (cssFiles.length) {
+          code = insertStylesheet(code, piletName, debug);
+        }
+
+        code = prependBanner(code, requireRef, importmap);
         return { code, map };
       }
+
+      return { code, map };
     },
   };
 }

@@ -4,14 +4,12 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import codegen from 'rollup-plugin-codegen';
 import pilet from 'rollup-plugin-pilet';
 import scss from 'rollup-plugin-scss';
-import { basename, extname, join } from 'path';
 import type { PiletBuildHandler } from 'piral-cli';
+import { join } from 'path';
 import { runRollup } from './bundler-run';
 
 function nameOf(path: string) {
-  const file = basename(path);
-  const ext = extname(file);
-  return file.substring(0, file.length - ext.length);
+  return path.replace(/\.js$/, '');
 }
 
 function getPackageName() {
@@ -44,9 +42,11 @@ const handler: PiletBuildHandler = {
       external.push(dep.name);
     });
 
-    // finally add the importmap entries to the bundler entry points
+    // finally add the local importmap entries to the bundler entry points
     options.importmap.forEach((dep) => {
-      input[nameOf(dep.ref)] = dep.entry;
+      if (dep.type === 'local') {
+        input[nameOf(dep.ref)] = dep.entry;
+      }
     });
 
     return runRollup({

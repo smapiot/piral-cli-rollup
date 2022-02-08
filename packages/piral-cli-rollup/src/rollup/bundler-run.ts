@@ -21,19 +21,21 @@ export function runRollup(options: RollupOptions) {
   return Promise.resolve({
     async bundle() {
       if (debug) {
-        const watcher = watch(input);
+        const watcher = watch({ ...input, output });
         watcher.on('event', (event) => {
           if (event.code === 'ERROR') {
             console.log(event);
           } else if (event.code === 'BUNDLE_START') {
           } else if (event.code === 'BUNDLE_END') {
+            event.result.close();
           } else if (event.code === 'END') {
             eventEmitter.emit('end', bundle);
           }
         });
+        eventEmitter.emit('start', bundle);
       } else {
         const b = await rollup(input);
-        await b.generate(output);
+        await b.write(output);
       }
 
       return bundle;

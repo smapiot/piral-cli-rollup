@@ -15,10 +15,10 @@ export function modifyImports(code: string, dependencies: Array<SharedDependency
 
 export function prependBanner(code: string, requireRef: string, dependencies: Array<SharedDependency>) {
   const deps = dependencies.reduce((deps, dep) => {
-    deps[dep.id] = dep.entry;
+    deps[dep.id] = dep.ref;
     return deps;
   }, {});
-  const head = `//$@pilet v:2(${requireRef},${JSON.stringify(deps)})`;
+  const head = `//@pilet v:2(${requireRef},${JSON.stringify(deps)})`;
   return `${head}\n${code}`;
 }
 

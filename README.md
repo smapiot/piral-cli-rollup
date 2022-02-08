@@ -16,8 +16,8 @@ The `piral-cli` plugin for using `rollup` (v2) as bundler.
     - [x] v2 format
     - [x] tsconfig changes
     - [x] Building
-    - [ ] Debugging
-    - [ ] Reloading
+    - [x] Debugging
+    - [x] Reloading
 - [ ] Piral instances (tested / working)
     - [x] Codegen
     - [ ] HTML entry point
