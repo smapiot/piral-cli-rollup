@@ -6,7 +6,7 @@ This plugin enables using [Rollup](https://rollupjs.org) as the bundler for Pira
 
 ## Installation
 
-Use your favorite NPM client for the installation:
+Use your favorite npm client for the installation:
 
 ```sh
 npm i piral-cli-rollup --save-dev
