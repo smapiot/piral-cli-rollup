@@ -3,10 +3,12 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import codegen from 'rollup-plugin-codegen';
 import pilet from 'rollup-plugin-pilet';
-import scss from 'rollup-plugin-scss';
+import postcss from 'rollup-plugin-postcss';
+import replace from '@rollup/plugin-replace';
 import type { PiletBuildHandler } from 'piral-cli';
-import { join } from 'path';
+import { resolve } from 'path';
 import { runRollup } from './bundler-run';
+import { getVariables } from '../utils';
 
 function nameOf(path: string) {
   return path.replace(/\.js$/, '');
@@ -26,7 +28,6 @@ const handler: PiletBuildHandler = {
     const piletName = getPackageName();
     const requireRef = getRequireRef();
     const external: Array<string> = [];
-    const outputStyle: any = 'outputStyle';
     const id = nameOf(options.outFile);
     const input = {
       [id]: options.entryModule,
@@ -56,7 +57,7 @@ const handler: PiletBuildHandler = {
       requireRef,
       output: {
         format: 'system',
-        sourcemap: options.sourceMaps,
+        sourcemap: options.sourceMaps ?? true,
         dir: options.outDir,
       },
       external,
@@ -65,17 +66,22 @@ const handler: PiletBuildHandler = {
         commonjs(),
         typescript(),
         codegen(),
+        replace({
+          values: getVariables(),
+          preventAssignment: true,
+        }),
+        postcss({
+          extract: resolve(options.outDir, 'style.css'),
+          use: ['sass'],
+          minimize: !options.develop,
+          extensions: ['.css', '.scss', '.sass', '.pcss', '.sss'],
+        }),
         pilet({
           id,
           piletName,
           requireRef,
           importmap: options.importmap,
           debug: options.develop,
-        }),
-        scss({
-          output: join(options.outDir, 'style.css'),
-          [outputStyle]: 'compressed',
-          sourceMap: true,
         }),
       ],
     });
