@@ -1,19 +1,19 @@
-import { rollup, watch, InputOptions, OutputOptions } from 'rollup';
+import { rollup, watch, RollupOptions } from 'rollup';
 import { EventEmitter } from 'events';
 
-interface RollupOptions extends InputOptions {
+interface RollupConfig extends RollupOptions {
   debug: boolean;
-  output: OutputOptions;
   outFile: string;
   requireRef?: string;
 }
 
-export function runRollup(options: RollupOptions) {
+export function runRollup(options: RollupConfig) {
   const { debug, output, outFile, requireRef, ...input } = options;
+  const out = Array.isArray(output) ? output.shift() : output;
   const eventEmitter = new EventEmitter();
   const bundle = {
     outFile: `/${outFile}`,
-    outDir: output.dir,
+    outDir: out.dir,
     name: outFile,
     requireRef,
   };
@@ -26,8 +26,10 @@ export function runRollup(options: RollupOptions) {
           if (event.code === 'ERROR') {
             console.log(event);
           } else if (event.code === 'BUNDLE_START') {
+            console.log('Bunding ...');
           } else if (event.code === 'BUNDLE_END') {
             event.result.close();
+            console.log('Bundled!');
           } else if (event.code === 'END') {
             eventEmitter.emit('end', bundle);
           }
@@ -35,7 +37,7 @@ export function runRollup(options: RollupOptions) {
         eventEmitter.emit('start', bundle);
       } else {
         const b = await rollup(input);
-        await b.write(output);
+        await b.write(out);
       }
 
       return bundle;

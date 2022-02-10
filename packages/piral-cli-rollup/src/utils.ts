@@ -1,6 +1,6 @@
 import { load, Element, CheerioAPI } from 'cheerio';
 import { readFileSync } from 'fs';
-import { basename, dirname, extname, resolve } from 'path';
+import { dirname, resolve } from 'path';
 
 function isLocal(path: string) {
   if (path) {
@@ -18,22 +18,6 @@ function isLocal(path: string) {
   }
 
   return false;
-}
-
-function getName(path: string) {
-  const name = filename(path);
-
-  if (/\.(jsx?|tsx?)$/.test(path) && name === 'index') {
-    return 'main';
-  } else {
-    return name;
-  }
-}
-
-function filename(path: string) {
-  const file = basename(path);
-  const ext = extname(file);
-  return file.substring(0, file.length - ext.length);
 }
 
 function extractParts(content: CheerioAPI) {
@@ -56,19 +40,6 @@ function extractParts(content: CheerioAPI) {
   }
 
   return files;
-}
-
-export function getVariables(): Record<string, string> {
-  return Object.keys(process.env).reduce(
-    (prev, curr) => {
-      prev[`process.env.${curr}`] = JSON.stringify(process.env[curr]);
-      return prev;
-    },
-    {
-      'process.env.DEBUG_PIRAL': '""',
-      'process.env.DEBUG_PILET': '""',
-    },
-  );
 }
 
 export function makeHtmlAttributes(attributes: Record<string, any>) {

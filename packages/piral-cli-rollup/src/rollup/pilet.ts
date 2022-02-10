@@ -1,14 +1,8 @@
-import typescript from '@rollup/plugin-typescript';
-import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
-import codegen from 'rollup-plugin-codegen';
 import pilet from 'rollup-plugin-pilet';
-import postcss from 'rollup-plugin-postcss';
-import replace from '@rollup/plugin-replace';
 import type { PiletBuildHandler } from 'piral-cli';
-import { resolve } from 'path';
+import { createCommonConfig } from './common';
 import { runRollup } from './bundler-run';
-import { getVariables } from '../utils';
+import { extendConfig } from '../helpers';
 
 function nameOf(path: string) {
   return path.replace(/\.js$/, '');
@@ -50,40 +44,42 @@ const handler: PiletBuildHandler = {
       }
     });
 
+    const baseConfig = createCommonConfig(
+      options.outDir,
+      options.develop,
+      options.sourceMaps,
+      options.contentHash,
+      options.minify,
+    );
+
+    const config = extendConfig(
+      {
+        ...baseConfig,
+        input,
+        output: {
+          ...baseConfig.output,
+          format: 'system',
+        },
+        external,
+        plugins: [
+          ...baseConfig.plugins,
+          pilet({
+            id,
+            piletName,
+            requireRef,
+            importmap: options.importmap,
+            debug: options.develop,
+          }),
+        ],
+      },
+      options.root,
+    );
+
     return runRollup({
-      input,
+      ...config,
       debug: options.watch,
       outFile: options.outFile,
       requireRef,
-      output: {
-        format: 'system',
-        sourcemap: options.sourceMaps ?? true,
-        dir: options.outDir,
-      },
-      external,
-      plugins: [
-        nodeResolve(),
-        commonjs(),
-        typescript(),
-        codegen(),
-        replace({
-          values: getVariables(),
-          preventAssignment: true,
-        }),
-        postcss({
-          extract: resolve(options.outDir, 'style.css'),
-          use: ['sass'],
-          minimize: !options.develop,
-          extensions: ['.css', '.scss', '.sass', '.pcss', '.sss'],
-        }),
-        pilet({
-          id,
-          piletName,
-          requireRef,
-          importmap: options.importmap,
-          debug: options.develop,
-        }),
-      ],
     });
   },
 };

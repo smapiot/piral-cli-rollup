@@ -24,13 +24,42 @@ This plugin comes with batteries included. You don't need to install or specify 
 
 Right now it includes:
 
-- tbd
+- `@rollup/plugin-commonjs`
+- `@rollup/plugin-node-resolve`
+- `@rollup/plugin-replace`
+- `@rollup/plugin-url`
+- `@rollup/plugin-typescript`
+- `rollup-plugin-codegen`
+- `rollup-plugin-postcss`
+
+Additionally, most known referenced assets are handled as files.
 
 As such it should be prepared to include assets (images, videos, ...), stylesheets (CSS and SASS), and work with TypeScript.
 
 ### Customizing
 
-tbd
+If you want to customize the given config (e.g., to add more plugins) then create a file *rollup.config.js* in your root directory.
+
+In the most trivial version the file looks as follows:
+
+```js
+module.exports = function(config) {
+  return config;
+};
+```
+
+This would just receive the original build config and return them, i.e., essentially not doing anything. If you want to add some plugin you could do:
+
+```js
+const fooPlugin = require('rollup-plugin-foo');
+
+module.exports = function(config) {
+  config.plugins.push(fooPlugin());
+  return options;
+};
+```
+
+There are no overrides applied afterwards. Therefore, what you modify will remain in the config.
 
 ## License
 
