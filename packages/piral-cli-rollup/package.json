@@ -41,7 +41,7 @@
   "devDependencies": {
     "@types/node": "^13.9.0",
     "@types/yargs": "^15.0.4",
-    "piral-cli": "^0.14.9"
+    "piral-cli": "next"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",

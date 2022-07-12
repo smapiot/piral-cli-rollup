@@ -37,6 +37,6 @@
   },
   "devDependencies": {
     "rollup": "^2.67.1",
-    "piral-cli": "^0.14.9"
+    "piral-cli": "next"
   }
 }
