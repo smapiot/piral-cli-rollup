@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-pilet",
-  "version": "0.15.0",
+  "version": "0.14.32",
   "description": "Adds support for pilet output in Rollup",
   "keywords": [
     "rollup",
