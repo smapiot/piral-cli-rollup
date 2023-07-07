@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (tbd)
+## 1.0.0 (July 7, 2023)
 
 - Adjusted for Piral 1.0.0
 - Fixed issue with Piral emulator overwriting the *index.js*
