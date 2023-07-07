@@ -1,4 +1,4 @@
-import { Plugin } from 'rollup';
+import type { Plugin } from 'rollup';
 
 function reloadGenerator(name: string) {
   delete require.cache[require.resolve(name)];

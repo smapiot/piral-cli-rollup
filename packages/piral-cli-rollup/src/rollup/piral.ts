@@ -28,6 +28,7 @@ const handler: PiralBuildHandler = {
         input: entries,
         output: {
           ...baseConfig.output,
+          entryFileNames: '[name].[hash].js',
           format: 'amd',
         },
         plugins: [
