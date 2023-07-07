@@ -36,7 +36,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "rollup": "^2.67.1",
-    "piral-cli": "next"
+    "piral-cli": "next",
+    "rollup": "^2.67.1"
   }
 }
