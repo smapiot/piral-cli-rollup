@@ -1,4 +1,4 @@
-import { load, Element, CheerioAPI } from 'cheerio';
+import { load, CheerioAPI } from 'cheerio';
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 
@@ -22,13 +22,13 @@ function isLocal(path: string) {
 
 function extractParts(content: CheerioAPI) {
   const sheets = content('link[href][rel=stylesheet]')
-    .filter((_, e: Element) => isLocal(e.attribs.href))
+    .filter((_, e) => isLocal(e.attribs.href))
     .remove()
-    .toArray() as Array<Element>;
+    .toArray();
   const scripts = content('script[src]')
-    .filter((_, e: Element) => isLocal(e.attribs.src))
+    .filter((_, e) => isLocal(e.attribs.src))
     .remove()
-    .toArray() as Array<Element>;
+    .toArray();
   const files = [];
 
   for (const script of scripts) {
