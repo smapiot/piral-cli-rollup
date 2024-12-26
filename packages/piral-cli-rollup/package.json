@@ -17,7 +17,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "engines": {
-    "node": ">=14.0"
+    "node": ">=16.0"
   },
   "files": [
     "lib",
@@ -35,13 +35,12 @@
     "url": "https://github.com/smapiot/piral-cli-rollup/issues"
   },
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^14.0.0",
-    "@types/yargs": "^15.0.4",
-    "piral-cli": "1.0.0"
+    "@types/node": "^16",
+    "@types/yargs": "^17",
+    "piral-cli": "1.7.3"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
@@ -50,10 +49,10 @@
     "@rollup/plugin-replace": "^3.0.1",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rollup/plugin-url": "^6.1.0",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "1.0.0",
     "postcss": "^8.4.6",
     "rollup": "^2.67.1",
-    "rollup-plugin-codegen": "^1.0.0",
+    "rollup-plugin-codegen": "^2",
     "rollup-plugin-pilet": "^1.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.32.12"
