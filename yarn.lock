@@ -4922,9 +4922,9 @@ rimraf@^4.4.1:
     glob "^9.2.0"
 
 rollup-plugin-codegen@^2:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-codegen/-/rollup-plugin-codegen-2.0.0.tgz#597a7e99c8f0c4562b826ec3f7203b7094e7eaec"
-  integrity sha512-2cci2EFTyWHjg3v99rH9BWwWuLfKU4EGJio5ruvlRcQDkS3sFDmc7fcUcBts0ZdtVWX2Pq/StcwhogSkoDylkQ==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-codegen/-/rollup-plugin-codegen-2.1.0.tgz#9012361d468ba797d42e8003662690fea63f024a"
+  integrity sha512-s05dUvo9YcR8GkoYlTcEpMGdtZDW6d4/tPbNtm2Zr3QfBVTKo6mkVYSmAUecJJg303Wxch9HJidTLi0GdJB9Sg==
 
 rollup-plugin-postcss@^4.0.2:
   version "4.0.2"
