@@ -1,6 +1,6 @@
 {
   "name": "piral-cli-rollup",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Provides debug and build capabilities for pilets and Piral instances using Rollup.",
   "keywords": [
     "piral-cli",
@@ -53,7 +53,7 @@
     "postcss": "^8.4.6",
     "rollup": "^2.67.1",
     "rollup-plugin-codegen": "^2",
-    "rollup-plugin-pilet": "^1.0.0",
+    "rollup-plugin-pilet": "^1.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.32.12"
   }
